@@ -107,18 +107,17 @@ x_test = x_test.astype('float32') / 255.
 x_train = np.reshape(x_train, (len(x_train), 32, 32, 1)) 
 x_test = np.reshape(x_test, (len(x_test), 32, 32, 1))  
 
-model.fit(x_train, y_train, epochs=20, verbose=1)
-y_test = model.predict(x_test)
-
 
 num_iter = 0
 while 1: 
     print("in while")
     
     if num_iter == 0:
+        print("in if 1")
         model.fit(x_train, y_train, epochs=20, verbose=1)
         y_test = model.predict(x_test)
         num_iter = num_iter + 1
+        print("num _t iter = " + str(num_iter))
     
     else:
         print("in else 1")
@@ -132,9 +131,9 @@ while 1:
                 if y_in == 0:
                     index_y.append([1., 0., 0.])
                 elif y_in == 1:
-                    index_y.append([0., 1., 0.])
+                    index_y.append([0., 1, 0.])
                 elif y_in == 2:
-                    index_y.append([0., 0., 1.])
+                    index_y.append([0., 0., 1])
                 print(len(real))
                 print(i)
                 real.append(x_test[i])
@@ -142,6 +141,7 @@ while 1:
             else:
                 index.append(x_test[i])
         x_test = np.array(index)
+        print("length of index_y = " + str(len(index_y)))
                 
         if len(index_y) == 0:
             print("in if 1")
@@ -180,13 +180,17 @@ while 1:
         
         
         real_arr = np.array(real)
-        real_arr = real_arr.astype('float32') / 255.
+        real_arr = real_arr.astype('float32')
     
         x_train = np.concatenate((real_arr, x_train))
         index_y = np.array(index_y)
-        y_train = np.concatenate((index_y/255., y_train))
+        y_train = np.concatenate((index_y, y_train))
+        
+        if len(x_test) <= 1:
+            break
         
         model.fit(x_train, y_train, epochs=20, verbose=1)
         y_test = model.predict(x_test)
         num_iter = num_iter + 1
+        print("num _t iter = " + str(num_iter))
        

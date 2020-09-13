@@ -129,7 +129,7 @@ while 1:
         
         
         real_arr = np.array(real)
-        real_arr = real_arr.astype('float32') / 255.
+        real_arr = real_arr.astype('float32')
     
         x_train = np.concatenate((real_arr, x_train))
         y_train = np.concatenate((np.ones((len(real_arr),1))/255., y_train))
